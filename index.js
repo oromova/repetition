@@ -665,3 +665,93 @@ const handleDelete = (id) => {
     </button>
   </div>
 ))}
+
+const [products, setProducts] = useState([
+  { id: 1, title: "iPhone" },
+  { id: 2, title: "Samsung" }
+]);
+
+const newProduct = {
+  id: 3,
+  title: "Xiaomi"
+};
+
+const handleAdd = () => {
+  setProducts((prev) => {
+    return [
+      ...prev,
+      newProduct
+    ]
+  })
+}
+
+const [products, setProducts] = useState([
+  { id: 1, title: "iPhone", price: 1000 },
+  { id: 2, title: "Samsung", price: 800 }
+]);
+
+const handleUpdate = () => {
+  setProducts((prev) => {
+    return prev.map((product) => {
+      if (product.id === 1) {
+        return {
+          ...product,
+          price: 1200
+        }
+      }
+       return product
+    })
+  })
+};
+
+const handleUpdate = (id, newPrice) => {
+  setProducts((prev) => {
+    return prev.map((item) => {
+      if (item.id === id) {
+        return {
+          ... item,
+          price: newPrice
+        }
+      }
+      return item
+    });
+  });
+};
+
+
+const [price, setPrice] = useState("");
+
+<input
+  value={price}
+  onChange={(event) => {
+    setPrice(event.target.value)
+  }}
+/>
+
+const newProduct = {
+  id: 3,
+  title,
+  price: Number(price)
+};
+
+const [products, setProducts] = useState([
+  { id: 1, title: "iPhone", price: 1000 },
+  { id: 2, title: "Samsung", price: 800 }
+]);
+
+setProducts((prev) => {
+  return prev.map((item) => {
+    return [
+      ...prev,
+      newProduct
+    ]
+  })
+})
+
+useEffect(() => {
+  async function getProducts() {
+    const response = await fetch("https://dummyjson.com/products")
+  }
+
+  getProducts();
+}, []);
