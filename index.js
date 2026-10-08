@@ -755,3 +755,15 @@ useEffect(() => {
 
   getProducts();
 }, []);
+
+const url = "https://dummyjson.com/products";
+
+const response = await fetch(url)
+
+const data = await response.json()
+
+setProducts(data.products)
+
+async function getProducts() {
+  
+}
