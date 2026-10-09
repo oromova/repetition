@@ -764,6 +764,142 @@ const data = await response.json()
 
 setProducts(data.products)
 
-async function getProducts() {
-  
+
+const products = [
+  { id: 1, title: "iPhone", price: 1000 },
+  { id: 2, title: "Samsung", price: 800 }
+];
+
+return (
+  <div>
+    {products.map((item) => (
+      <div key={item.id}>
+        <h2>{item.title}</h2>
+        <p>Price: ${item.price}</p>
+      </div>
+    ))}
+  </div>
+);
+
+
+const users = [
+  { id: 1, name: "Ali", age: 25 },
+  { id: 2, name: "Vali", age: 30 },
+  { id: 3, name: "Sardor", age: 22 }
+];
+
+return (
+  <div>
+    {users.map((item) => (
+      <div key={item.id}>
+        <p>{item.name} - {item.age}</p>
+      </div>
+    ))}
+  </div>
+)
+
+import { useState, useEffect } from "react";
+
+function Products() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function getProducts() {
+      try {
+        const response = await fetch(
+          "https://dummyjson.com/products"
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to load products");
+        }
+
+        const data = await response.json();
+        setProducts(data.products);
+
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    getProducts();
+  }, []);
+
+if (loading) {
+  return <p>Loading...</p>;
 }
+
+if (error) {
+  return <p>{error}</p>;
+}
+
+if (products.length === 0) {
+  return <p>No products found</p>;
+}
+
+return (
+  <div>
+    {products.map((product) => (
+      <div key={product.id}>
+        <h2>{product.title}</h2>
+        <p>Price: ${product.price}</p>
+      </div>
+    ))}
+  </div>
+);
+
+const [users, setUsers] = useState([]);
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState(null);
+
+useEffect(() => {
+  async function getUsers() {
+    try {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/users"
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to load users");
+      }
+
+      const data = await response.json();
+      setUsers(data);
+
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  getUsers();
+}, [])
+
+if (loading) {
+  return <p>Loading...</p>
+}
+
+if (error) {
+  return <p>{error}</p>
+}
+
+if (users.length === 0){
+  <p>No users found</p>
+}
+
+return (
+  <div>
+    {users.map((item) => (
+      <div>
+        <h2>{item.name}</h2>
+        <p>{item.email}</p>
+      </div>
+    ))}
+  </div>
+)
+
